@@ -39,7 +39,7 @@ export default function Contact() {
           className="mb-16 text-center"
         >
           <h2 className="mb-4 text-5xl font-bold tracking-tight">
-            Let's <span className="text-accent">Connect</span>
+            Let&apos;s <span className="text-accent">Connect</span>
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted">
             Open to new opportunities and collaborations. Feel free to reach out!

@@ -30,7 +30,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="mb-6 text-5xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl"
           >
-            Hi, I'm <span className="text-accent">Bruno Mbachu</span>
+            Hi, I&apos;m <span className="text-accent">Bruno Mbachu</span>
             <br />
             Frontend Engineer
           </motion.h1>

@@ -22,13 +22,13 @@ export default function About() {
             </h2>
             <div className="space-y-4 text-lg leading-relaxed text-muted">
               <p>
-                I'm a Frontend Engineer with 5+ years of experience building scalable React and TypeScript 
+                I&apos;m a Frontend Engineer with 5+ years of experience building scalable React and TypeScript 
                 applications in product-driven environments. Currently working at Redcare Pharmacy in Cologne, 
                 Germany, where I lead frontend development for complex product interfaces.
               </p>
               <p>
                 My expertise lies in creating usable, performant, and maintainable UIs while collaborating 
-                closely with product managers, designers, and backend teams. I've delivered complex dashboards, 
+                closely with product managers, designers, and backend teams. I&apos;ve delivered complex dashboards, 
                 workflows, and tools at scale in e-commerce and enterprise settings.
               </p>
               <p>
