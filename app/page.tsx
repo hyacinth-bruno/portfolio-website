@@ -41,10 +41,10 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-border bg-background/50 backdrop-blur-sm">
+      <footer className="relative z-10 border-t-2 border-border bg-background/50 backdrop-blur-sm">
         <div className="container mx-auto px-6 py-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className="text-sm text-muted">
+            <p className="text-sm font-medium text-muted-foreground">
               © {new Date().getFullYear()} Bruno Mbachu. All rights reserved.
             </p>
             <div className="flex gap-6">
@@ -52,7 +52,8 @@ export default function Home() {
                 href="https://github.com/hyacinth-bruno"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted transition-colors hover:text-accent"
+                className="font-semibold text-muted-foreground underline decoration-2 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent focus-visible:text-accent"
+                aria-label="Visit Bruno's GitHub profile"
               >
                 GitHub
               </a>
@@ -60,7 +61,8 @@ export default function Home() {
                 href="https://linkedin.com/in/bruno-mbachu/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted transition-colors hover:text-accent"
+                className="font-semibold text-muted-foreground underline decoration-2 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent focus-visible:text-accent"
+                aria-label="Visit Bruno's LinkedIn profile"
               >
                 LinkedIn
               </a>

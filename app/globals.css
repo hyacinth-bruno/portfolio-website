@@ -5,11 +5,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --background: 240 15% 8%;
-  --foreground: 60 9% 98%;
-  --muted: 240 10% 65%;
-  --border: 240 15% 25%;
-  --accent: 48 96% 53%;
+  /* WCAG 2.1 AA compliant color scheme */
+  --background: 220 26% 14%;
+  --foreground: 0 0% 100%;
+  --muted: 220 17% 75%;
+  --muted-foreground: 220 17% 85%;
+  --border: 220 20% 30%;
+  --accent: 47 100% 70%;
+  --accent-hover: 47 100% 65%;
+  --accent-contrast: 220 26% 14%;
+  --success: 142 71% 45%;
+  --focus-ring: 47 100% 70%;
   
   --font-sans: 'Libre Franklin', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -35,7 +41,33 @@ body {
 
 ::selection {
   background: hsl(var(--accent) / 0.3);
-  color: hsl(var(--foreground));
+  color: hsl(var(--background));
+}
+
+/* Focus styles for accessibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid hsl(var(--focus-ring));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip to main content link for screen readers */
+.skip-to-main {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 1rem;
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-contrast));
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.skip-to-main:focus {
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1rem;
 }
 
 .grain {
@@ -53,5 +85,26 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  /* High contrast text utilities for WCAG compliance */
+  .text-high-contrast {
+    color: hsl(var(--foreground));
+    font-weight: 500;
+  }
+  
+  .text-muted-accessible {
+    color: hsl(var(--muted-foreground));
+  }
+  
+  /* Underline for links to help color blind users */
+  .link-underline {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+  
+  .link-underline:hover {
+    text-decoration-thickness: 2px;
   }
 }

@@ -19,7 +19,7 @@ export default function Hero() {
             transition={{ duration: 0.8 }}
             className="mb-6"
           >
-            <span className="inline-block rounded-full border border-accent/20 bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent">
+            <span className="inline-block rounded-full border-2 border-accent bg-accent/15 px-4 py-1.5 text-sm font-semibold text-accent">
               Open to opportunities
             </span>
           </motion.div>
@@ -39,7 +39,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mx-auto mb-12 max-w-2xl text-lg text-muted md:text-xl"
+            className="mx-auto mb-12 max-w-2xl text-lg text-muted-foreground md:text-xl"
           >
             Building scalable React and TypeScript applications in product-driven environments. 
             Focused on usability, performance, and maintainable UI with hands-on collaboration across teams.
@@ -53,14 +53,13 @@ export default function Hero() {
           >
             <a
               href="#projects"
-              className="group relative overflow-hidden rounded-full bg-accent px-8 py-4 font-medium text-background transition-all hover:shadow-lg hover:shadow-accent/50"
+              className="group relative overflow-hidden rounded-full bg-accent px-8 py-4 font-semibold text-background transition-all hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/30 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               <span className="relative z-10">View My Work</span>
-              <div className="absolute inset-0 -z-0 bg-gradient-to-r from-accent to-yellow-400 opacity-0 transition-opacity group-hover:opacity-100" />
             </a>
             <a
               href="#contact"
-              className="rounded-full border border-border px-8 py-4 font-medium transition-all hover:border-accent hover:text-accent"
+              className="rounded-full border-2 border-accent bg-background px-8 py-4 font-semibold text-accent transition-all hover:bg-accent hover:text-background focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Get In Touch
             </a>
@@ -72,15 +71,15 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.8 }}
             className="mt-20"
           >
-            <div className="flex items-center justify-center gap-8 text-sm text-muted">
+            <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-accent animate-pulse" />
-                <span>5+ Years Experience</span>
+                <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
+                <span className="font-medium">5+ Years Experience</span>
               </div>
               <div className="h-4 w-px bg-border" />
               <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-accent animate-pulse" />
-                <span>Based in Hamm, Germany</span>
+                <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
+                <span className="font-medium">Based in Hamm, Germany</span>
               </div>
             </div>
           </motion.div>
@@ -95,11 +94,11 @@ export default function Hero() {
         className="absolute bottom-10 left-1/2 -translate-x-1/2"
       >
         <div className="flex flex-col items-center gap-2">
-          <span className="text-xs text-muted">Scroll to explore</span>
+          <span className="text-xs font-medium text-muted-foreground">Scroll to explore</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
-            className="h-6 w-4 rounded-full border-2 border-accent/50"
+            className="h-6 w-4 rounded-full border-2 border-accent"
           >
             <motion.div
               animate={{ y: [0, 12, 0] }}

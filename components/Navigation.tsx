@@ -38,10 +38,10 @@ export default function Navigation() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="relative text-sm font-medium text-muted transition-colors hover:text-foreground"
+                className="relative text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground focus-visible:text-accent"
               >
                 {item}
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 hover:w-full" />
+                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-accent transition-all duration-300 group-hover:w-full" />
               </motion.a>
             ))}
           </div>
@@ -51,7 +51,7 @@ export default function Navigation() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="rounded-full border border-accent px-6 py-2 text-sm font-medium text-accent transition-all hover:bg-accent hover:text-background"
+            className="rounded-full border-2 border-accent bg-background px-6 py-2 text-sm font-semibold text-accent transition-all hover:bg-accent hover:text-background focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             Get In Touch
           </motion.a>
