@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import ThemeRegistry from './ThemeRegistry'
 
 export const metadata: Metadata = {
   title: 'Bruno Mbachu | Frontend Engineer',
@@ -22,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="grain" />
-        {children}
+        <ThemeRegistry>{children}</ThemeRegistry>
       </body>
     </html>
   )

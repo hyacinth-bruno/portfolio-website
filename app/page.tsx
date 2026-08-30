@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
-import Projects from '@/components/Projects'
-import Skills from '@/components/Skills'
 import Contact from '@/components/Contact'
 import Navigation from '@/components/Navigation'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Link from '@mui/material/Link'
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -21,55 +22,79 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="relative min-h-screen">
+    <Box component="main" sx={{ position: 'relative', minHeight: '100vh' }}>
       {/* Cursor glow effect */}
-      <div
-        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
-        style={{
+      <Box
+        sx={{
+          pointerEvents: 'none',
+          position: 'fixed',
+          inset: 0,
+          zIndex: 30,
+          transition: 'opacity 0.3s ease',
           background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(253, 224, 71, 0.06), transparent 80%)`,
         }}
       />
 
       <Navigation />
-      
-      <div className="relative z-10">
+
+      <Box sx={{ position: 'relative', zIndex: 10 }}>
         <Hero />
         <About />
-        <Skills />
-        <Projects />
         <Contact />
-      </div>
+      </Box>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t-2 border-border bg-background/50 backdrop-blur-sm">
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className="text-sm font-medium text-muted-foreground">
-              © {new Date().getFullYear()} Bruno Mbachu. All rights reserved.
-            </p>
-            <div className="flex gap-6">
-              <a
-                href="https://github.com/hyacinth-bruno"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-muted-foreground underline decoration-2 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent focus-visible:text-accent"
-                aria-label="Visit Bruno's GitHub profile"
-              >
-                GitHub
-              </a>
-              <a
-                href="https://linkedin.com/in/bruno-mbachu/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-muted-foreground underline decoration-2 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent focus-visible:text-accent"
-                aria-label="Visit Bruno's LinkedIn profile"
-              >
-                LinkedIn
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </main>
+      <Box
+        component="footer"
+        sx={{
+          position: 'relative',
+          zIndex: 10,
+          borderTop: '2px solid',
+          borderColor: 'divider',
+          bgcolor: 'rgba(255,255,255,0.02)',
+          backdropFilter: 'blur(8px)',
+        }}
+      >
+        <Box
+          sx={{
+            maxWidth: 'lg',
+            mx: 'auto',
+            px: 3,
+            py: 4,
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 2,
+          }}
+        >
+          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
+            © {new Date().getFullYear()} Bruno Mbachu. All rights reserved.
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 3 }}>
+            <Link
+              href="https://github.com/hyacinth-bruno"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Bruno's GitHub profile"
+              underline="hover"
+              sx={{ fontWeight: 600, color: 'text.secondary', '&:hover': { color: 'primary.main' } }}
+            >
+              GitHub
+            </Link>
+            <Link
+              href="https://linkedin.com/in/bruno-mbachu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Bruno's LinkedIn profile"
+              underline="hover"
+              sx={{ fontWeight: 600, color: 'text.secondary', '&:hover': { color: 'primary.main' } }}
+            >
+              LinkedIn
+            </Link>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   )
 }

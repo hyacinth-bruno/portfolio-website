@@ -2,6 +2,15 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import { alpha } from '@mui/material/styles'
+
+const MotionAppBar = motion(AppBar)
+const MotionButton = motion(Button)
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -14,49 +23,65 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navItems = ['About', 'Skills', 'Projects', 'Contact']
+  const navItems = ['About', 'Contact']
 
   return (
-    <motion.nav
+    <MotionAppBar
+      position="fixed"
+      elevation={0}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-        isScrolled ? 'bg-background/80 backdrop-blur-md border-b border-border' : ''
-      }`}
+      sx={{
+        backgroundColor: isScrolled ? (theme) => alpha(theme.palette.background.default, 0.8) : 'transparent',
+        backdropFilter: isScrolled ? 'blur(12px)' : 'none',
+        borderBottom: isScrolled ? '1px solid' : '1px solid transparent',
+        borderColor: 'divider',
+        transition: 'all 0.3s ease',
+      }}
     >
-      <div className="container mx-auto px-6">
-        <div className="flex h-20 items-center justify-between">
-          <a href="#" className="text-xl font-semibold tracking-tight">
-            <span className="text-accent">Bruno</span> Mbachu
-          </a>
+      <Toolbar disableGutters sx={{ maxWidth: 'lg', mx: 'auto', width: '100%', px: 3, height: 80 }}>
+        <Typography
+          component="a"
+          href="#"
+          variant="h6"
+          sx={{ fontWeight: 600, letterSpacing: '-0.02em', textDecoration: 'none', color: 'text.primary' }}
+        >
+          <Box component="span" sx={{ color: 'primary.main' }}>
+            Bruno
+          </Box>{' '}
+          Mbachu
+        </Typography>
 
-          <div className="hidden gap-8 md:flex">
-            {navItems.map((item, index) => (
-              <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="relative text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground focus-visible:text-accent"
-              >
-                {item}
-                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-accent transition-all duration-300 group-hover:w-full" />
-              </motion.a>
-            ))}
-          </div>
+        <Box sx={{ flexGrow: 1 }} />
 
-          <motion.a
-            href="#contact"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="rounded-full border-2 border-accent bg-background px-6 py-2 text-sm font-semibold text-accent transition-all hover:bg-accent hover:text-background focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          >
-            Get In Touch
-          </motion.a>
-        </div>
-      </div>
-    </motion.nav>
+        <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1, mr: 2 }}>
+          {navItems.map((item, index) => (
+            <MotionButton
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              variant="text"
+              color="primary"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              sx={{ color: 'text.secondary', fontWeight: 600, borderRadius: 2, px: 2 }}
+            >
+              {item}
+            </MotionButton>
+          ))}
+        </Box>
+
+        <MotionButton
+          href="#contact"
+          variant="outlined"
+          color="primary"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          Get In Touch
+        </MotionButton>
+      </Toolbar>
+    </MotionAppBar>
   )
 }
