@@ -7,55 +7,72 @@ import Button from '@mui/material/Button'
 import Chip from '@mui/material/Chip'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
+import type { IconType } from 'react-icons'
+import {
+  SiReact,
+  SiTypescript,
+  SiNextdotjs,
+  SiRedux,
+  SiTailwindcss,
+  SiJavascript,
+  SiNodedotjs,
+  SiGraphql,
+  SiDocker,
+  SiPostgresql,
+  SiMongodb,
+} from 'react-icons/si'
+import { FaAws } from 'react-icons/fa'
 
 const MotionBox = motion(Box)
 
-type Tech = { name: string; mark: string; color: string }
+type Tech = { name: string; icon: IconType; color: string }
 
 const row1: Tech[] = [
-  { name: 'React', mark: 'Re', color: '#61DAFB' },
-  { name: 'TypeScript', mark: 'TS', color: '#3178C6' },
-  { name: 'Next.js', mark: 'N', color: '#FFFFFF' },
-  { name: 'Redux', mark: 'Rx', color: '#764ABC' },
-  { name: 'Tailwind CSS', mark: 'Tw', color: '#38BDF8' },
-  { name: 'JavaScript', mark: 'Js', color: '#F7DF1E' },
+  { name: 'React', icon: SiReact, color: '#61DAFB' },
+  { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+  { name: 'Next.js', icon: SiNextdotjs, color: '#FFFFFF' },
+  { name: 'Redux', icon: SiRedux, color: '#764ABC' },
+  { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#38BDF8' },
+  { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
 ]
 
 const row2: Tech[] = [
-  { name: 'Node.js', mark: 'Nd', color: '#339933' },
-  { name: 'GraphQL', mark: 'Gq', color: '#E10098' },
-  { name: 'Docker', mark: 'Dk', color: '#2496ED' },
-  { name: 'PostgreSQL', mark: 'Pg', color: '#4169E1' },
-  { name: 'MongoDB', mark: 'Mo', color: '#47A248' },
-  { name: 'AWS', mark: 'AWS', color: '#FF9900' },
+  { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
+  { name: 'GraphQL', icon: SiGraphql, color: '#E10098' },
+  { name: 'Docker', icon: SiDocker, color: '#2496ED' },
+  { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
+  { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
+  { name: 'AWS', icon: FaAws, color: '#FF9900' },
 ]
 
 function TechChip({ tech }: { tech: Tech }) {
+  const Icon = tech.icon
   return (
     <Chip
       variant="outlined"
       avatar={
         <Avatar
           sx={{
-            bgcolor: `${tech.color}22`,
-            color: tech.color,
+            bgcolor: 'rgba(255,255,255,0.08)',
             border: `1px solid ${tech.color}55`,
+            '& svg': { width: '55%', height: '55%' },
           }}
         >
-          {tech.mark}
+          <Icon color={tech.color} />
         </Avatar>
       }
       label={tech.name}
       sx={{
         flexShrink: 0,
         height: 'auto',
-        py: 1,
+        py: { xs: 0.5, md: 1 },
         px: 0.5,
         borderWidth: 2,
         borderColor: 'divider',
         bgcolor: 'rgba(255,255,255,0.03)',
         backdropFilter: 'blur(8px)',
-        '& .MuiChip-label': { fontWeight: 600, fontSize: '0.95rem' },
+        '& .MuiChip-label': { fontWeight: 600, fontSize: { xs: '0.8rem', md: '0.95rem' } },
+        '& .MuiAvatar-root': { width: { xs: 24, md: 40 }, height: { xs: 24, md: 40 }, fontSize: { xs: '0.65rem', md: '0.75rem' } },
       }}
     />
   )
@@ -112,6 +129,7 @@ export default function Hero() {
         justifyContent: 'center',
         overflow: 'hidden',
         pt: '80px',
+        pb: { xs: 6, lg: 14 },
       }}
     >
       {/* Geometric background elements */}
@@ -145,115 +163,176 @@ export default function Hero() {
       </Box>
 
       <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 3, width: '100%' }}>
-        <Box sx={{ mx: 'auto', maxWidth: '56rem', textAlign: 'center' }}>
-          <MotionBox
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            sx={{ mb: 3 }}
-          >
-            <Chip
-              label="Open to opportunities"
-              variant="outlined"
-              color="primary"
-              sx={{ bgcolor: 'rgba(255,222,102,0.15)', fontWeight: 600, px: 1, py: 2.5, fontSize: '0.875rem' }}
-            />
-          </MotionBox>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', lg: '1.1fr 0.9fr' },
+            gap: { xs: 2, lg: 8 },
+            alignItems: 'center',
+          }}
+        >
+          <Box sx={{ textAlign: { xs: 'center', lg: 'left' }, order: { xs: 2, lg: 1 } }}>
+            <MotionBox
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              sx={{ mb: { xs: 1.5, lg: 3 } }}
+            >
+              <Chip
+                label="Open to opportunities"
+                variant="outlined"
+                color="primary"
+                sx={{
+                  bgcolor: 'rgba(255,222,102,0.15)',
+                  fontWeight: 600,
+                  px: 1,
+                  py: { xs: 1.5, lg: 2.5 },
+                  fontSize: { xs: '0.75rem', lg: '0.875rem' },
+                }}
+              />
+            </MotionBox>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-          >
-            <Typography
-              variant="h1"
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+            >
+              <Typography
+                variant="h1"
+                sx={{
+                  mb: { xs: 1.5, lg: 3 },
+                  fontWeight: 700,
+                  lineHeight: 1.1,
+                  letterSpacing: '-0.02em',
+                  fontSize: { xs: '1.9rem', md: '3.25rem', lg: '3.75rem' },
+                }}
+              >
+                Hi, I&apos;m <Box component="span" sx={{ color: 'primary.main' }}>Bruno Mbachu</Box>
+                <br />
+                Frontend Engineer
+              </Typography>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <Typography
+                variant="h6"
+                component="p"
+                sx={{
+                  mx: { xs: 'auto', lg: 0 },
+                  mb: { xs: 2, lg: 6 },
+                  maxWidth: '38rem',
+                  color: 'text.secondary',
+                  fontWeight: 400,
+                  fontSize: { xs: '0.9375rem', md: '1.25rem' },
+                }}
+              >
+                Building scalable React and TypeScript applications in product-driven environments.
+                Focused on usability, performance, and maintainable UI with hands-on collaboration across teams.
+              </Typography>
+            </motion.div>
+
+            <MotionBox
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
               sx={{
-                mb: 3,
-                fontWeight: 700,
-                lineHeight: 1.1,
-                letterSpacing: '-0.02em',
-                fontSize: { xs: '2.75rem', md: '3.75rem', lg: '4.5rem' },
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: { xs: 'center', lg: 'flex-start' },
+                gap: { xs: 1.5, lg: 2 },
               }}
             >
-              Hi, I&apos;m <Box component="span" sx={{ color: 'primary.main' }}>Bruno Mbachu</Box>
-              <br />
-              Frontend Engineer
-            </Typography>
-          </motion.div>
+              <Button
+                href="#about"
+                variant="contained"
+                color="primary"
+                size="large"
+                sx={{ px: { xs: 2.5, lg: 4 }, py: { xs: 0.75, lg: '0.9rem' } }}
+              >
+                About Me
+              </Button>
+              <Button
+                href="#contact"
+                variant="outlined"
+                color="primary"
+                size="large"
+                sx={{ px: { xs: 2.5, lg: 4 }, py: { xs: 0.75, lg: '0.9rem' } }}
+              >
+                Get In Touch
+              </Button>
+            </MotionBox>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            <MotionBox
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+              sx={{ mt: { xs: 1.5, lg: 10 } }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: { xs: 'center', lg: 'flex-start' },
+                  gap: { xs: 2, lg: 4 },
+                  flexWrap: 'wrap',
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box
+                    sx={{
+                      height: 8,
+                      width: 8,
+                      borderRadius: '50%',
+                      bgcolor: 'success.main',
+                      animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                    5+ Years Experience
+                  </Typography>
+                </Box>
+                <Box sx={{ height: 16, width: '1px', bgcolor: 'divider', display: { xs: 'none', sm: 'block' } }} />
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box
+                    sx={{
+                      height: 8,
+                      width: 8,
+                      borderRadius: '50%',
+                      bgcolor: 'success.main',
+                      animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                    Based in Hamm, Germany
+                  </Typography>
+                </Box>
+              </Box>
+            </MotionBox>
+          </Box>
+
+          <MotionBox
+            initial={{ opacity: 0, scale: 0.95, x: 20 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            sx={{ display: 'flex', justifyContent: 'center', order: { xs: 1, lg: 2 } }}
           >
-            <Typography
-              variant="h6"
-              component="p"
+            <Avatar
+              variant="rounded"
+              src="/profile.png"
+              alt="Bruno Mbachu"
               sx={{
-                mx: 'auto',
-                mb: 6,
-                maxWidth: '42rem',
-                color: 'text.secondary',
-                fontWeight: 400,
-                fontSize: { xs: '1.125rem', md: '1.25rem' },
+                width: '100%',
+                maxWidth: { xs: 150, sm: 320, md: 420 },
+                aspectRatio: '1 / 1',
+                height: 'auto',
+                borderRadius: 4,
               }}
-            >
-              Building scalable React and TypeScript applications in product-driven environments.
-              Focused on usability, performance, and maintainable UI with hands-on collaboration across teams.
-            </Typography>
-          </motion.div>
-
-          <MotionBox
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: 2 }}
-          >
-            <Button href="#about" variant="contained" color="primary" size="large">
-              About Me
-            </Button>
-            <Button href="#contact" variant="outlined" color="primary" size="large">
-              Get In Touch
-            </Button>
-          </MotionBox>
-
-          <MotionBox
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            sx={{ mt: 10 }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4, flexWrap: 'wrap' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Box
-                  sx={{
-                    height: 8,
-                    width: 8,
-                    borderRadius: '50%',
-                    bgcolor: 'success.main',
-                    animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                  }}
-                />
-                <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                  5+ Years Experience
-                </Typography>
-              </Box>
-              <Box sx={{ height: 16, width: '1px', bgcolor: 'divider', display: { xs: 'none', sm: 'block' } }} />
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Box
-                  sx={{
-                    height: 8,
-                    width: 8,
-                    borderRadius: '50%',
-                    bgcolor: 'success.main',
-                    animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                  }}
-                />
-                <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                  Based in Hamm, Germany
-                </Typography>
-              </Box>
-            </Box>
+            />
           </MotionBox>
         </Box>
 
@@ -261,7 +340,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
-          sx={{ mx: 'auto', mt: 8, maxWidth: '64rem', display: 'flex', flexDirection: 'column', gap: 2 }}
+          sx={{ mt: { xs: 2, lg: 10 }, display: 'flex', flexDirection: 'column', gap: 1 }}
         >
           <MarqueeRow items={row1} direction={1} speed={30} />
           <MarqueeRow items={row2} direction={-1} speed={30} />
@@ -273,10 +352,13 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 1 }}
-        sx={{ position: 'absolute', bottom: 40, left: '50%', transform: 'translateX(-50%)' }}
+        sx={{ position: 'absolute', bottom: { xs: 12, lg: 40 }, left: '50%', transform: 'translateX(-50%)' }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
-          <Typography variant="caption" sx={{ fontWeight: 500, color: 'text.secondary' }}>
+          <Typography
+            variant="caption"
+            sx={{ fontWeight: 500, color: 'text.secondary', display: { xs: 'none', lg: 'block' } }}
+          >
             Scroll to explore
           </Typography>
           <motion.div
