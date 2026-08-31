@@ -70,6 +70,15 @@ button:focus-visible {
   top: 1rem;
 }
 
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 .grain {
   position: fixed;
   top: 0;

@@ -1,113 +1,390 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useAnimationFrame, useMotionValue } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Chip from '@mui/material/Chip'
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
+import type { IconType } from 'react-icons'
+import {
+  SiReact,
+  SiTypescript,
+  SiNextdotjs,
+  SiRedux,
+  SiTailwindcss,
+  SiJavascript,
+  SiNodedotjs,
+  SiGraphql,
+  SiDocker,
+  SiPostgresql,
+  SiMongodb,
+} from 'react-icons/si'
+import { FaAws } from 'react-icons/fa'
+
+const MotionBox = motion(Box)
+
+type Tech = { name: string; icon: IconType; color: string }
+
+const row1: Tech[] = [
+  { name: 'React', icon: SiReact, color: '#61DAFB' },
+  { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+  { name: 'Next.js', icon: SiNextdotjs, color: '#FFFFFF' },
+  { name: 'Redux', icon: SiRedux, color: '#764ABC' },
+  { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#38BDF8' },
+  { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
+]
+
+const row2: Tech[] = [
+  { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
+  { name: 'GraphQL', icon: SiGraphql, color: '#E10098' },
+  { name: 'Docker', icon: SiDocker, color: '#2496ED' },
+  { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
+  { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
+  { name: 'AWS', icon: FaAws, color: '#FF9900' },
+]
+
+function TechChip({ tech }: { tech: Tech }) {
+  const Icon = tech.icon
+  return (
+    <Chip
+      variant="outlined"
+      avatar={
+        <Avatar
+          sx={{
+            bgcolor: 'rgba(255,255,255,0.08)',
+            border: `1px solid ${tech.color}55`,
+            '& svg': { width: '55%', height: '55%' },
+          }}
+        >
+          <Icon color={tech.color} />
+        </Avatar>
+      }
+      label={tech.name}
+      sx={{
+        flexShrink: 0,
+        height: 'auto',
+        py: { xs: 0.5, md: 1 },
+        px: 0.5,
+        borderWidth: 2,
+        borderColor: 'divider',
+        bgcolor: 'rgba(255,255,255,0.03)',
+        backdropFilter: 'blur(8px)',
+        '& .MuiChip-label': { fontWeight: 600, fontSize: { xs: '0.8rem', md: '0.95rem' } },
+        '& .MuiAvatar-root': { width: { xs: 24, md: 40 }, height: { xs: 24, md: 40 }, fontSize: { xs: '0.65rem', md: '0.75rem' } },
+      }}
+    />
+  )
+}
+
+function MarqueeRow({ items, direction = 1, speed = 30 }: { items: Tech[]; direction?: 1 | -1; speed?: number }) {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const x = useMotionValue(0)
+  const [paused, setPaused] = useState(false)
+  const [loopWidth, setLoopWidth] = useState(0)
+
+  useEffect(() => {
+    if (trackRef.current) {
+      setLoopWidth(trackRef.current.scrollWidth / 2)
+    }
+  }, [])
+
+  useAnimationFrame((_, delta) => {
+    if (paused || !loopWidth) return
+    let next = x.get() - direction * speed * (delta / 1000)
+    if (next <= -loopWidth) next += loopWidth
+    if (next > 0) next -= loopWidth
+    x.set(next)
+  })
+
+  return (
+    <Box
+      sx={{
+        overflow: 'hidden',
+        WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+        maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+      }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <motion.div ref={trackRef} style={{ x, display: 'flex', width: 'max-content', gap: '1rem' }}>
+        {[...items, ...items].map((tech, i) => (
+          <TechChip key={`${tech.name}-${i}`} tech={tech} />
+        ))}
+      </motion.div>
+    </Box>
+  )
+}
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-20">
+    <Box
+      component="section"
+      sx={{
+        position: 'relative',
+        display: 'flex',
+        minHeight: '100vh',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        pt: '80px',
+        pb: { xs: 6, lg: 14 },
+      }}
+    >
       {/* Geometric background elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
-      </div>
+      <Box sx={{ position: 'absolute', inset: 0, zIndex: -1 }}>
+        <Box
+          sx={{
+            position: 'absolute',
+            right: 0,
+            top: 80,
+            height: 384,
+            width: 384,
+            borderRadius: '50%',
+            bgcolor: 'primary.main',
+            opacity: 0.05,
+            filter: 'blur(64px)',
+          }}
+        />
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            height: 384,
+            width: 384,
+            borderRadius: '50%',
+            bgcolor: 'primary.main',
+            opacity: 0.05,
+            filter: 'blur(64px)',
+          }}
+        />
+      </Box>
 
-      <div className="container mx-auto px-6">
-        <div className="mx-auto max-w-4xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="mb-6"
-          >
-            <span className="inline-block rounded-full border-2 border-accent bg-accent/15 px-4 py-1.5 text-sm font-semibold text-accent">
-              Open to opportunities
-            </span>
-          </motion.div>
+      <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 3, width: '100%' }}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', lg: '1.1fr 0.9fr' },
+            gap: { xs: 2, lg: 8 },
+            alignItems: 'center',
+          }}
+        >
+          <Box sx={{ textAlign: { xs: 'center', lg: 'left' }, order: { xs: 2, lg: 1 } }}>
+            <MotionBox
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              sx={{ mb: { xs: 1.5, lg: 3 } }}
+            >
+              <Chip
+                label="Open to opportunities"
+                variant="outlined"
+                color="primary"
+                sx={{
+                  bgcolor: 'rgba(255,222,102,0.15)',
+                  fontWeight: 600,
+                  px: 1,
+                  py: { xs: 1.5, lg: 2.5 },
+                  fontSize: { xs: '0.75rem', lg: '0.875rem' },
+                }}
+              />
+            </MotionBox>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="mb-6 text-5xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl"
-          >
-            Hi, I&apos;m <span className="text-accent">Bruno Mbachu</span>
-            <br />
-            Frontend Engineer
-          </motion.h1>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+            >
+              <Typography
+                variant="h1"
+                sx={{
+                  mb: { xs: 1.5, lg: 3 },
+                  fontWeight: 700,
+                  lineHeight: 1.1,
+                  letterSpacing: '-0.02em',
+                  fontSize: { xs: '1.9rem', md: '3.25rem', lg: '3.75rem' },
+                }}
+              >
+                Hi, I&apos;m <Box component="span" sx={{ color: 'primary.main' }}>Bruno Mbachu</Box>
+                <br />
+                Frontend Engineer
+              </Typography>
+            </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <Typography
+                variant="h6"
+                component="p"
+                sx={{
+                  mx: { xs: 'auto', lg: 0 },
+                  mb: { xs: 2, lg: 6 },
+                  maxWidth: '38rem',
+                  color: 'text.secondary',
+                  fontWeight: 400,
+                  fontSize: { xs: '0.9375rem', md: '1.25rem' },
+                }}
+              >
+                Building scalable React and TypeScript applications in product-driven environments.
+                Focused on usability, performance, and maintainable UI with hands-on collaboration across teams.
+              </Typography>
+            </motion.div>
+
+            <MotionBox
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: { xs: 'center', lg: 'flex-start' },
+                gap: { xs: 1.5, lg: 2 },
+              }}
+            >
+              <Button
+                href="#about"
+                variant="contained"
+                color="primary"
+                size="large"
+                sx={{ px: { xs: 2.5, lg: 4 }, py: { xs: 0.75, lg: '0.9rem' } }}
+              >
+                About Me
+              </Button>
+              <Button
+                href="#contact"
+                variant="outlined"
+                color="primary"
+                size="large"
+                sx={{ px: { xs: 2.5, lg: 4 }, py: { xs: 0.75, lg: '0.9rem' } }}
+              >
+                Get In Touch
+              </Button>
+            </MotionBox>
+
+            <MotionBox
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+              sx={{ mt: { xs: 1.5, lg: 10 } }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: { xs: 'center', lg: 'flex-start' },
+                  gap: { xs: 2, lg: 4 },
+                  flexWrap: 'wrap',
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box
+                    sx={{
+                      height: 8,
+                      width: 8,
+                      borderRadius: '50%',
+                      bgcolor: 'success.main',
+                      animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                    5+ Years Experience
+                  </Typography>
+                </Box>
+                <Box sx={{ height: 16, width: '1px', bgcolor: 'divider', display: { xs: 'none', sm: 'block' } }} />
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box
+                    sx={{
+                      height: 8,
+                      width: 8,
+                      borderRadius: '50%',
+                      bgcolor: 'success.main',
+                      animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                    Based in Hamm, Germany
+                  </Typography>
+                </Box>
+              </Box>
+            </MotionBox>
+          </Box>
+
+          <MotionBox
+            initial={{ opacity: 0, scale: 0.95, x: 20 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mx-auto mb-12 max-w-2xl text-lg text-muted-foreground md:text-xl"
+            sx={{ display: 'flex', justifyContent: 'center', order: { xs: 1, lg: 2 } }}
           >
-            Building scalable React and TypeScript applications in product-driven environments. 
-            Focused on usability, performance, and maintainable UI with hands-on collaboration across teams.
-          </motion.p>
+            <Avatar
+              variant="rounded"
+              src="/profile.png"
+              alt="Bruno Mbachu"
+              sx={{
+                width: '100%',
+                maxWidth: { xs: 150, sm: 320, md: 420 },
+                aspectRatio: '1 / 1',
+                height: 'auto',
+                borderRadius: 4,
+              }}
+            />
+          </MotionBox>
+        </Box>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex flex-wrap items-center justify-center gap-4"
-          >
-            <a
-              href="#projects"
-              className="group relative overflow-hidden rounded-full bg-accent px-8 py-4 font-semibold text-background transition-all hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/30 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
-              <span className="relative z-10">View My Work</span>
-            </a>
-            <a
-              href="#contact"
-              className="rounded-full border-2 border-accent bg-background px-8 py-4 font-semibold text-accent transition-all hover:bg-accent hover:text-background focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
-              Get In Touch
-            </a>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="mt-20"
-          >
-            <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
-                <span className="font-medium">5+ Years Experience</span>
-              </div>
-              <div className="h-4 w-px bg-border" />
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
-                <span className="font-medium">Based in Hamm, Germany</span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
+        <MotionBox
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1 }}
+          sx={{ mt: { xs: 2, lg: 10 }, display: 'flex', flexDirection: 'column', gap: 1 }}
+        >
+          <MarqueeRow items={row1} direction={1} speed={30} />
+          <MarqueeRow items={row2} direction={-1} speed={30} />
+        </MotionBox>
+      </Box>
 
       {/* Scroll indicator */}
-      <motion.div
+      <MotionBox
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        transition={{ delay: 1.4, duration: 1 }}
+        sx={{ position: 'absolute', bottom: { xs: 12, lg: 40 }, left: '50%', transform: 'translateX(-50%)' }}
       >
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-xs font-medium text-muted-foreground">Scroll to explore</span>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
+          <Typography
+            variant="caption"
+            sx={{ fontWeight: 500, color: 'text.secondary', display: { xs: 'none', lg: 'block' } }}
+          >
+            Scroll to explore
+          </Typography>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
-            className="h-6 w-4 rounded-full border-2 border-accent"
+            style={{
+              height: 24,
+              width: 16,
+              borderRadius: 9999,
+              border: '2px solid #FFDE66',
+            }}
           >
             <motion.div
               animate={{ y: [0, 12, 0] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
-              className="mx-auto mt-1 h-2 w-1 rounded-full bg-accent"
+              style={{
+                margin: '4px auto 0',
+                height: 8,
+                width: 4,
+                borderRadius: 9999,
+                backgroundColor: '#FFDE66',
+              }}
             />
           </motion.div>
-        </div>
-      </motion.div>
-    </section>
+        </Box>
+      </MotionBox>
+    </Box>
   )
 }
