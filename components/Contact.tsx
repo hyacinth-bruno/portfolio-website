@@ -11,10 +11,6 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import Divider from '@mui/material/Divider'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
 import SvgIcon from '@mui/material/SvgIcon'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined'
@@ -66,16 +62,22 @@ export default function Contact() {
 
   const contactRows = [
     {
-      icon: <EmailOutlinedIcon color="primary" />,
+      icon: <EmailOutlinedIcon sx={{ fontSize: 18 }} />,
       label: 'Email',
       value: 'mbachubruno.chidozie@gmail.com',
       href: 'mailto:mbachubruno.chidozie@gmail.com',
     },
     {
-      icon: <LocalPhoneOutlinedIcon color="primary" />,
+      icon: <LocalPhoneOutlinedIcon sx={{ fontSize: 18 }} />,
       label: 'Phone',
       value: '+49 179 222 5853',
       href: 'tel:+491792225853',
+    },
+    {
+      icon: <LocationOnOutlinedIcon sx={{ fontSize: 18 }} />,
+      label: 'Location',
+      value: 'Hamm, Germany',
+      href: undefined,
     },
   ]
 
@@ -106,75 +108,81 @@ export default function Contact() {
               sx={{ height: 'fit-content' }}
             >
               <CardContent sx={{ p: 4 }}>
-                <Typography variant="h5" sx={{ mb: 3, fontWeight: 600 }}>
+                <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 600 }}>
                   Get in Touch
                 </Typography>
 
-                <List disablePadding>
+                <Box
+                  sx={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 0.75,
+                    mb: 3,
+                    px: 1.25,
+                    py: 0.5,
+                    borderRadius: 999,
+                    bgcolor: 'rgba(34,197,94,0.12)',
+                    border: '1px solid',
+                    borderColor: 'rgba(34,197,94,0.3)',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: '50%',
+                      bgcolor: 'success.main',
+                      animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }}
+                  />
+                  <Typography variant="caption" sx={{ fontWeight: 600, color: 'success.main' }}>
+                    I reply within 24 hours
+                  </Typography>
+                </Box>
+
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                   {contactRows.map((row) => (
-                    <ListItem key={row.label} disableGutters alignItems="flex-start" sx={{ mb: 1 }}>
-                      <ListItemIcon
+                    <Box key={row.label} sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                      <Box
                         sx={{
-                          minWidth: 44,
-                          height: 44,
-                          width: 44,
-                          borderRadius: 2,
+                          flexShrink: 0,
+                          width: 32,
+                          height: 32,
+                          borderRadius: 1.5,
                           bgcolor: 'rgba(255,222,102,0.15)',
+                          color: 'primary.main',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                         }}
                       >
                         {row.icon}
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={row.label}
-                        secondary={
-                          <Box
-                            component="a"
-                            href={row.href}
-                            sx={{
-                              color: 'text.secondary',
-                              fontWeight: 500,
-                              textDecoration: 'underline',
-                              textUnderlineOffset: '4px',
-                              '&:hover': { color: 'primary.main' },
-                            }}
-                          >
-                            {row.value}
-                          </Box>
-                        }
-                        slotProps={{ primary: { sx: { fontWeight: 600, mb: 0.5 } } }}
-                      />
-                    </ListItem>
+                      </Box>
+                      {row.href ? (
+                        <Typography
+                          component="a"
+                          href={row.href}
+                          aria-label={`${row.label}: ${row.value}`}
+                          variant="body2"
+                          sx={{
+                            fontWeight: 600,
+                            color: 'text.primary',
+                            textDecoration: 'none',
+                            '&:hover': { color: 'primary.main' },
+                          }}
+                        >
+                          {row.value}
+                        </Typography>
+                      ) : (
+                        <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary' }}>
+                          {row.value}
+                        </Typography>
+                      )}
+                    </Box>
                   ))}
-                  <ListItem disableGutters alignItems="flex-start">
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 44,
-                        height: 44,
-                        width: 44,
-                        borderRadius: 2,
-                        bgcolor: 'rgba(255,222,102,0.15)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <LocationOnOutlinedIcon color="primary" />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="Location"
-                      secondary="Hamm, Germany"
-                      slotProps={{
-                        primary: { sx: { fontWeight: 600, mb: 0.5 } },
-                        secondary: { sx: { color: 'text.secondary', fontWeight: 500 } },
-                      }}
-                    />
-                  </ListItem>
-                </List>
+                </Box>
 
-                <Divider sx={{ my: 4, borderWidth: 1 }} />
+                <Divider sx={{ my: 3, borderWidth: 1 }} />
 
                 <Typography sx={{ mb: 2, fontWeight: 600 }}>Connect With Me</Typography>
                 <Box sx={{ display: 'flex', gap: 2 }}>

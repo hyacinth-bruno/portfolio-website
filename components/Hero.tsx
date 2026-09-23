@@ -129,7 +129,7 @@ export default function Hero() {
         justifyContent: 'center',
         overflow: 'hidden',
         pt: '80px',
-        pb: { xs: 6, lg: 14 },
+        pb: { xs: 6, md: 10, lg: 14 },
       }}
     >
       {/* Geometric background elements */}
@@ -166,17 +166,17 @@ export default function Hero() {
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: { xs: '1fr', lg: '1.1fr 0.9fr' },
-            gap: { xs: 2, lg: 8 },
+            gridTemplateColumns: { xs: '1fr', md: '1.1fr 0.9fr' },
+            gap: { xs: 2, md: 5, lg: 8 },
             alignItems: 'center',
           }}
         >
-          <Box sx={{ textAlign: { xs: 'center', lg: 'left' }, order: { xs: 2, lg: 1 } }}>
+          <Box sx={{ textAlign: { xs: 'center', md: 'left' }, order: { xs: 2, md: 1 } }}>
             <MotionBox
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              sx={{ mb: { xs: 1.5, lg: 3 } }}
+              sx={{ mb: { xs: 1.5, md: 3 } }}
             >
               <Chip
                 label="Open to opportunities"
@@ -186,8 +186,8 @@ export default function Hero() {
                   bgcolor: 'rgba(255,222,102,0.15)',
                   fontWeight: 600,
                   px: 1,
-                  py: { xs: 1.5, lg: 2.5 },
-                  fontSize: { xs: '0.75rem', lg: '0.875rem' },
+                  py: { xs: 1.5, md: 2.5 },
+                  fontSize: { xs: '0.75rem', md: '0.875rem' },
                 }}
               />
             </MotionBox>
@@ -200,7 +200,7 @@ export default function Hero() {
               <Typography
                 variant="h1"
                 sx={{
-                  mb: { xs: 1.5, lg: 3 },
+                  mb: { xs: 1.5, md: 3 },
                   fontWeight: 700,
                   lineHeight: 1.1,
                   letterSpacing: '-0.02em',
@@ -222,8 +222,8 @@ export default function Hero() {
                 variant="h6"
                 component="p"
                 sx={{
-                  mx: { xs: 'auto', lg: 0 },
-                  mb: { xs: 2, lg: 6 },
+                  mx: { xs: 'auto', md: 0 },
+                  mb: { xs: 2, md: 4, lg: 6 },
                   maxWidth: '38rem',
                   color: 'text.secondary',
                   fontWeight: 400,
@@ -243,8 +243,8 @@ export default function Hero() {
                 display: 'flex',
                 flexWrap: 'wrap',
                 alignItems: 'center',
-                justifyContent: { xs: 'center', lg: 'flex-start' },
-                gap: { xs: 1.5, lg: 2 },
+                justifyContent: { xs: 'center', md: 'flex-start' },
+                gap: { xs: 1.5, md: 2 },
               }}
             >
               <Button
@@ -252,7 +252,7 @@ export default function Hero() {
                 variant="contained"
                 color="primary"
                 size="large"
-                sx={{ px: { xs: 2.5, lg: 4 }, py: { xs: 0.75, lg: '0.9rem' } }}
+                sx={{ px: { xs: 2.5, md: 4 }, py: { xs: 0.75, md: '0.9rem' } }}
               >
                 About Me
               </Button>
@@ -261,7 +261,7 @@ export default function Hero() {
                 variant="outlined"
                 color="primary"
                 size="large"
-                sx={{ px: { xs: 2.5, lg: 4 }, py: { xs: 0.75, lg: '0.9rem' } }}
+                sx={{ px: { xs: 2.5, md: 4 }, py: { xs: 0.75, md: '0.9rem' } }}
               >
                 Get In Touch
               </Button>
@@ -271,14 +271,14 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.8 }}
-              sx={{ mt: { xs: 1.5, lg: 10 } }}
+              sx={{ mt: { xs: 1.5, md: 5, lg: 10 } }}
             >
               <Box
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: { xs: 'center', lg: 'flex-start' },
-                  gap: { xs: 2, lg: 4 },
+                  justifyContent: { xs: 'center', md: 'flex-start' },
+                  gap: { xs: 2, md: 4 },
                   flexWrap: 'wrap',
                 }}
               >
@@ -319,7 +319,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.95, x: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            sx={{ display: 'flex', justifyContent: 'center', order: { xs: 1, lg: 2 } }}
+            sx={{ display: 'flex', justifyContent: 'center', order: { xs: 1, md: 2 } }}
           >
             <Avatar
               variant="rounded"
@@ -340,7 +340,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
-          sx={{ mt: { xs: 2, lg: 10 }, display: 'flex', flexDirection: 'column', gap: 1 }}
+          sx={{ mt: { xs: 2, md: 6, lg: 10 }, display: 'flex', flexDirection: 'column', gap: 1 }}
         >
           <MarqueeRow items={row1} direction={1} speed={30} />
           <MarqueeRow items={row2} direction={-1} speed={30} />
@@ -352,12 +352,12 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 1 }}
-        sx={{ position: 'absolute', bottom: { xs: 12, lg: 40 }, left: '50%', transform: 'translateX(-50%)' }}
+        sx={{ position: 'absolute', bottom: { xs: 12, md: 24, lg: 40 }, left: '50%', transform: 'translateX(-50%)' }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
           <Typography
             variant="caption"
-            sx={{ fontWeight: 500, color: 'text.secondary', display: { xs: 'none', lg: 'block' } }}
+            sx={{ fontWeight: 500, color: 'text.secondary', display: { xs: 'none', md: 'block' } }}
           >
             Scroll to explore
           </Typography>
