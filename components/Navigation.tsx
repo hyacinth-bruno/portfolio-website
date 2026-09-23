@@ -8,6 +8,7 @@ import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { alpha } from '@mui/material/styles'
+import SplitCTA from './SplitCTA'
 
 const MotionAppBar = motion(AppBar)
 const MotionButton = motion(Button)
@@ -44,7 +45,14 @@ export default function Navigation() {
           component="a"
           href="#"
           variant="h6"
-          sx={{ fontWeight: 600, letterSpacing: '-0.02em', textDecoration: 'none', color: 'text.primary' }}
+          sx={{
+            fontWeight: 600,
+            letterSpacing: '-0.02em',
+            textDecoration: 'none',
+            color: 'text.primary',
+            fontSize: { xs: '1rem', sm: '1.25rem' },
+            whiteSpace: 'nowrap',
+          }}
         >
           <Box component="span" sx={{ color: 'primary.main' }}>
             Bruno
@@ -71,16 +79,9 @@ export default function Navigation() {
           ))}
         </Box>
 
-        <MotionButton
-          href="#contact"
-          variant="outlined"
-          color="primary"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          Get In Touch
-        </MotionButton>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
+          <SplitCTA />
+        </motion.div>
       </Toolbar>
     </MotionAppBar>
   )

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
+import HireMe from '@/components/HireMe'
 import Contact from '@/components/Contact'
 import Navigation from '@/components/Navigation'
 import Box from '@mui/material/Box'
@@ -40,6 +41,7 @@ export default function Home() {
       <Box sx={{ position: 'relative', zIndex: 10 }}>
         <Hero />
         <About />
+        <HireMe />
         <Contact />
       </Box>
 
