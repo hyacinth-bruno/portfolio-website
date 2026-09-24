@@ -35,20 +35,20 @@ export default function About() {
 
   const whatIDo = [
     {
-      title: 'Product Development',
-      description: 'Leading development of React/TypeScript interfaces integrating complex data and workflows',
+      title: 'Full-Stack Engineering',
+      description: 'Scalable products across frontend, backend, APIs, authentication, and data.',
+    },
+    {
+      title: 'AI & Automation',
+      description: 'AI assistants, RAG applications, intelligent workflows, and LLM integrations.',
+    },
+    {
+      title: 'Platforms & Developer Experience',
+      description: 'Internal tools, self-service portals, integrations, and delivery automation.',
     },
     {
       title: 'Performance & Accessibility',
-      description: 'Optimizing web vitals and ensuring WCAG compliance across multi-market platforms',
-    },
-    {
-      title: 'UI/UX Implementation',
-      description: 'Designing intuitive components with clear visual hierarchy and responsive layouts',
-    },
-    {
-      title: 'Team Collaboration',
-      description: 'Working closely with product, design, and backend teams to deliver scalable solutions',
+      description: 'Fast, resilient, well-tested, and inclusive digital experiences.',
     },
   ]
 
@@ -66,19 +66,17 @@ export default function About() {
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, fontSize: '1.125rem', lineHeight: 1.75, color: 'text.secondary' }}>
               <Typography component="p" sx={{ fontSize: 'inherit', lineHeight: 'inherit', color: 'inherit' }}>
-                I&apos;m a Frontend Engineer with 5+ years of experience building scalable React and TypeScript
-                applications in product-driven environments. Currently working at Redcare Pharmacy in Cologne,
-                Germany, where I lead frontend development for complex product interfaces.
+                I&apos;m a full-stack product engineer with 5+ years of experience building scalable digital
+                products across React, TypeScript, Node.js, APIs, data, and cloud platforms.
               </Typography>
               <Typography component="p" sx={{ fontSize: 'inherit', lineHeight: 'inherit', color: 'inherit' }}>
-                My expertise lies in creating usable, performant, and maintainable UIs while collaborating
-                closely with product managers, designers, and backend teams. I&apos;ve delivered complex dashboards,
-                workflows, and tools at scale in e-commerce and enterprise settings.
+                I turn complex requirements into intuitive, reliable, and maintainable software. My experience
+                spans customer-facing applications, AI-enabled products, internal platforms, developer tooling,
+                performance optimisation, and accessibility at scale.
               </Typography>
               <Typography component="p" sx={{ fontSize: 'inherit', lineHeight: 'inherit', color: 'inherit' }}>
-                Recently, I reduced WCAG violations by 70% across a 6-market e-commerce platform through
-                systematic accessibility improvements, demonstrating my commitment to building inclusive
-                web experiences for all users.
+                I&apos;m most effective when I can take ownership from architecture through delivery, combining
+                product thinking, engineering depth, and a strong focus on measurable outcomes.
               </Typography>
             </Box>
           </MotionBox>

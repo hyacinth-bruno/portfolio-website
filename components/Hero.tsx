@@ -22,6 +22,7 @@ import {
   SiMongodb,
 } from 'react-icons/si'
 import { FaAws } from 'react-icons/fa'
+import SplitCTA from './SplitCTA'
 
 const MotionBox = motion(Box)
 
@@ -256,15 +257,7 @@ export default function Hero() {
               >
                 About Me
               </Button>
-              <Button
-                href="#contact"
-                variant="outlined"
-                color="primary"
-                size="large"
-                sx={{ px: { xs: 2.5, md: 4 }, py: { xs: 0.75, md: '0.9rem' } }}
-              >
-                Get In Touch
-              </Button>
+              <SplitCTA size="large" />
             </MotionBox>
 
             <MotionBox

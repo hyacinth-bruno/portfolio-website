@@ -11,6 +11,8 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import Divider from '@mui/material/Divider'
+import Alert from '@mui/material/Alert'
+import CircularProgress from '@mui/material/CircularProgress'
 import SvgIcon from '@mui/material/SvgIcon'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined'
@@ -43,14 +45,38 @@ export default function Contact() {
     email: '',
     message: '',
   })
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Construct mailto link
-    const mailtoLink = `mailto:mbachubruno.chidozie@gmail.com?subject=Portfolio Contact from ${formData.name}&body=${encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    )}`
-    window.location.href = mailtoLink
+    setStatus('sending')
+    setErrorMessage('')
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: `Portfolio Contact from ${formData.name}`,
+          message: formData.message,
+        }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to send message')
+      }
+
+      setStatus('sent')
+      setFormData({ name: '', email: '', message: '' })
+    } catch (err) {
+      setStatus('error')
+      setErrorMessage(err instanceof Error ? err.message : 'Something went wrong')
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -98,7 +124,7 @@ export default function Contact() {
           </Typography>
         </MotionBox>
 
-        <Box sx={{ mx: 'auto', maxWidth: 'md' }}>
+        <Box>
           <Box sx={{ display: 'grid', gap: 4, gridTemplateColumns: { xs: '1fr', lg: '2fr 3fr' } }}>
             {/* Contact Info */}
             <MotionCard
@@ -267,8 +293,27 @@ export default function Contact() {
                   placeholder="Tell me about your project or opportunity..."
                 />
 
-                <Button type="submit" variant="contained" color="primary" size="large" fullWidth>
-                  Send Message
+                {status === 'sent' && (
+                  <Alert severity="success" onClose={() => setStatus('idle')}>
+                    Message sent! I&apos;ll get back to you within 24 hours.
+                  </Alert>
+                )}
+                {status === 'error' && (
+                  <Alert severity="error" onClose={() => setStatus('idle')}>
+                    {errorMessage}
+                  </Alert>
+                )}
+
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  fullWidth
+                  disabled={status === 'sending'}
+                  startIcon={status === 'sending' ? <CircularProgress size={18} color="inherit" /> : undefined}
+                >
+                  {status === 'sending' ? 'Sending...' : 'Send Message'}
                 </Button>
               </Box>
             </MotionBox>

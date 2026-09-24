@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
@@ -24,7 +25,7 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navItems = ['About', 'Contact']
+  const navItems = ['About', 'Projects']
 
   return (
     <MotionAppBar
@@ -41,24 +42,28 @@ export default function Navigation() {
       }}
     >
       <Toolbar disableGutters sx={{ maxWidth: 'lg', mx: 'auto', width: '100%', px: 3, height: 80 }}>
-        <Typography
+        <Box
           component="a"
           href="#"
-          variant="h6"
-          sx={{
-            fontWeight: 600,
-            letterSpacing: '-0.02em',
-            textDecoration: 'none',
-            color: 'text.primary',
-            fontSize: { xs: '1rem', sm: '1.25rem' },
-            whiteSpace: 'nowrap',
-          }}
+          sx={{ display: 'flex', alignItems: 'center', gap: 1.25, textDecoration: 'none' }}
         >
-          <Box component="span" sx={{ color: 'primary.main' }}>
-            Bruno
-          </Box>{' '}
-          Mbachu
-        </Typography>
+          <Image src="/portfolio-logo-icon.png" alt="" width={36} height={36} style={{ height: 36, width: 'auto' }} priority />
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 600,
+              letterSpacing: '-0.02em',
+              color: 'text.primary',
+              fontSize: { xs: '1rem', sm: '1.25rem' },
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <Box component="span" sx={{ color: 'primary.main' }}>
+              Bruno
+            </Box>{' '}
+            Mbachu
+          </Typography>
+        </Box>
 
         <Box sx={{ flexGrow: 1 }} />
 
