@@ -12,18 +12,25 @@ import Checkbox from '@mui/material/Checkbox'
 import Chip from '@mui/material/Chip'
 import RadioGroup from '@mui/material/RadioGroup'
 import Radio from '@mui/material/Radio'
+import Alert from '@mui/material/Alert'
+import CircularProgress from '@mui/material/CircularProgress'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined'
+import DesktopWindowsOutlinedIcon from '@mui/icons-material/DesktopWindowsOutlined'
+import PsychologyOutlinedIcon from '@mui/icons-material/PsychologyOutlined'
+import StorageOutlinedIcon from '@mui/icons-material/StorageOutlined'
+import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined'
 import { FaWhatsapp } from 'react-icons/fa'
 
 const MotionBox = motion(Box)
 
 const projectTypes = [
-  { value: 'mobile', title: 'Mobile app', subtitle: 'iOS or Android app' },
-  { value: 'web', title: 'Web app', subtitle: 'Website or web platform' },
-  { value: 'ai', title: 'AI system', subtitle: 'Chatbot, automation, AI tool' },
-  { value: 'other', title: 'Other', subtitle: 'Something different' },
+  { value: 'web', title: 'Web Application', subtitle: 'Full-stack web apps & platforms', icon: <DesktopWindowsOutlinedIcon sx={{ fontSize: 20 }} /> },
+  { value: 'ai', title: 'AI Solution', subtitle: 'AI assistants, RAG & automation', icon: <PsychologyOutlinedIcon sx={{ fontSize: 20 }} /> },
+  { value: 'internal', title: 'Internal Tool', subtitle: 'Portals, dashboards & workflows', icon: <StorageOutlinedIcon sx={{ fontSize: 20 }} /> },
+  { value: 'other', title: 'Other', subtitle: 'Something different', icon: <MoreHorizOutlinedIcon sx={{ fontSize: 20 }} /> },
 ]
 
 const contactMethods = [
@@ -43,25 +50,55 @@ export default function HireMe() {
   const [phone, setPhone] = useState('')
   const [sameNumberWhatsApp, setSameNumberWhatsApp] = useState(true)
   const [selectedMethods, setSelectedMethods] = useState<string[]>(['whatsapp'])
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const toggleMethod = (value: string) => {
     setSelectedMethods((prev) => (prev.includes(value) ? prev.filter((m) => m !== value) : [...prev, value]))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setStatus('sending')
+    setErrorMessage('')
+
     const projectLabel = projectTypes.find((p) => p.value === projectType)?.title ?? ''
-    const methodsLabel = selectedMethods
+    const preferredMethods = selectedMethods
       .map((m) => contactMethods.find((c) => c.value === m)?.label)
-      .filter(Boolean)
-      .join(', ')
-    const body = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}${
-      sameNumberWhatsApp ? ' (same number on WhatsApp)' : ''
-    }\nPreferred contact: ${methodsLabel}\nProject type: ${projectLabel}\n\nProject details:\n${description}`
-    const mailtoLink = `mailto:mbachubruno.chidozie@gmail.com?subject=${encodeURIComponent(
-      `Project Request from ${name || 'Website Visitor'}`
-    )}&body=${encodeURIComponent(body)}`
-    window.location.href = mailtoLink
+      .filter((label): label is string => Boolean(label))
+
+    try {
+      const res = await fetch('/api/hire-me', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          sameNumberWhatsApp,
+          projectType: projectLabel,
+          description,
+          preferredMethods,
+        }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to send request')
+      }
+
+      setStatus('sent')
+      setDescription('')
+      setName('')
+      setEmail('')
+      setPhone('')
+      setSelectedMethods(['whatsapp'])
+      setProjectType('ai')
+    } catch (err) {
+      setStatus('error')
+      setErrorMessage(err instanceof Error ? err.message : 'Something went wrong')
+    }
   }
 
   return (
@@ -82,9 +119,20 @@ export default function HireMe() {
           >
             Tell Me About Your <Box component="span" sx={{ color: 'primary.main' }}>Project</Box>
           </Typography>
-          <Typography variant="h6" component="p" sx={{ mx: 'auto', maxWidth: '42rem', color: 'text.secondary', fontWeight: 400 }}>
+          <Typography variant="h6" component="p" sx={{ mx: 'auto', mb: 3, maxWidth: '42rem', color: 'text.secondary', fontWeight: 400 }}>
             Share what you need and I&apos;ll get back to you with the best solution.
           </Typography>
+
+          <Button
+            href="/api/resume"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="outlined"
+            color="primary"
+            startIcon={<DownloadOutlinedIcon />}
+          >
+            Download CV
+          </Button>
         </MotionBox>
 
         <motion.div
@@ -92,11 +140,19 @@ export default function HireMe() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-        <Card component="form" onSubmit={handleSubmit} sx={{ maxWidth: 'md', mx: 'auto' }}>
+        <Card component="form" onSubmit={handleSubmit}>
           <CardContent sx={{ p: { xs: 3, md: 5 } }}>
             <Box sx={{ display: 'grid', gap: { xs: 5, md: 6 }, gridTemplateColumns: { xs: '1fr', md: '1.1fr 0.9fr' } }}>
               {/* Project details */}
-              <Box sx={{ pr: { md: 5 }, borderRight: { xs: 'none', md: '1px solid' }, borderColor: { md: 'divider' } }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  pr: { md: 5 },
+                  borderRight: { xs: 'none', md: '1px solid' },
+                  borderColor: { md: 'divider' },
+                }}
+              >
                 <Typography sx={{ mb: 2, fontWeight: 600 }}>What do you want me to build?</Typography>
                 <RadioGroup value={projectType} onChange={(e) => setProjectType(e.target.value)}>
                   <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, mb: 4 }}>
@@ -107,26 +163,43 @@ export default function HireMe() {
                           key={opt.value}
                           component="label"
                           sx={{
+                            position: 'relative',
                             cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'flex-start',
-                            gap: 1,
                             border: '2px solid',
                             borderColor: selected ? 'primary.main' : 'divider',
                             borderRadius: 2,
-                            p: 2,
+                            p: 2.5,
+                            minHeight: 120,
                             bgcolor: selected ? 'rgba(255,222,102,0.08)' : 'transparent',
-                            transition: 'border-color 0.2s ease, background-color 0.2s ease',
+                            boxShadow: selected ? '0 0 0 3px rgba(255,222,102,0.15)' : 'none',
+                            transition: 'border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease',
                             '&:hover': { borderColor: 'primary.main' },
                           }}
                         >
-                          <Radio value={opt.value} size="small" sx={{ p: 0, mt: '2px' }} />
-                          <Box>
-                            <Typography sx={{ fontWeight: 600, fontSize: '0.9rem' }}>{opt.title}</Typography>
-                            <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.8rem' }}>
-                              {opt.subtitle}
-                            </Typography>
+                          <Radio
+                            value={opt.value}
+                            size="small"
+                            sx={{ position: 'absolute', top: 8, right: 8, p: 0 }}
+                          />
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              width: 40,
+                              height: 40,
+                              borderRadius: 1.5,
+                              mb: 2,
+                              bgcolor: selected ? 'rgba(255,222,102,0.15)' : 'rgba(255,255,255,0.06)',
+                              color: selected ? 'primary.main' : 'text.secondary',
+                            }}
+                          >
+                            {opt.icon}
                           </Box>
+                          <Typography sx={{ fontWeight: 600, fontSize: '0.9rem', pr: 3 }}>{opt.title}</Typography>
+                          <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.8rem' }}>
+                            {opt.subtitle}
+                          </Typography>
                         </Box>
                       )
                     })}
@@ -140,7 +213,12 @@ export default function HireMe() {
                   placeholder="Tell me more about what you need..."
                   fullWidth
                   multiline
-                  rows={6}
+                  sx={{
+                    flexGrow: 1,
+                    display: 'flex',
+                    '& .MuiInputBase-root': { height: '100%', alignItems: 'flex-start' },
+                    '& .MuiInputBase-input': { height: '100% !important', overflow: 'auto' },
+                  }}
                   slotProps={{ htmlInput: { maxLength: 2000 } }}
                 />
                 <Typography variant="caption" sx={{ display: 'block', textAlign: 'right', mt: 0.5, color: 'text.secondary' }}>
@@ -149,7 +227,7 @@ export default function HireMe() {
               </Box>
 
               {/* Contact info */}
-              <Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <TextField
                   label="Your name"
                   value={name}
@@ -232,9 +310,31 @@ export default function HireMe() {
                   })}
                 </Box>
 
-                <Button type="submit" variant="contained" color="primary" size="large" fullWidth endIcon={<ArrowForwardIcon />}>
-                  Send Request
-                </Button>
+                <Box sx={{ mt: 'auto' }}>
+                  {status === 'sent' && (
+                    <Alert severity="success" onClose={() => setStatus('idle')} sx={{ mb: 2 }}>
+                      Request sent! I&apos;ll get back to you within 24 hours.
+                    </Alert>
+                  )}
+                  {status === 'error' && (
+                    <Alert severity="error" onClose={() => setStatus('idle')} sx={{ mb: 2 }}>
+                      {errorMessage}
+                    </Alert>
+                  )}
+
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    fullWidth
+                    disabled={status === 'sending'}
+                    endIcon={status === 'sending' ? undefined : <ArrowForwardIcon />}
+                    startIcon={status === 'sending' ? <CircularProgress size={18} color="inherit" /> : undefined}
+                  >
+                    {status === 'sending' ? 'Sending...' : 'Send Request'}
+                  </Button>
+                </Box>
               </Box>
             </Box>
           </CardContent>
