@@ -162,5 +162,8 @@ export async function getPublicRepos(): Promise<PublicRepo[]> {
       stars: repo.stargazers_count ?? 0,
       topics: repo.topics ?? [],
     }))
-    .sort((a, b) => b.stars - a.stars)
+    .sort((a, b) => {
+      const liveDiff = Number(Boolean(b.homepage)) - Number(Boolean(a.homepage))
+      return liveDiff !== 0 ? liveDiff : b.stars - a.stars
+    })
 }
