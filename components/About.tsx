@@ -9,6 +9,7 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import SvgIcon from '@mui/material/SvgIcon'
+import { bio, whatIDo, githubUsername, linkedinUrl } from '@/lib/profile'
 
 const MotionBox = motion(Box)
 const MotionCard = motion(Card)
@@ -33,25 +34,6 @@ export default function About() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
-  const whatIDo = [
-    {
-      title: 'Full-Stack Engineering',
-      description: 'Scalable products across frontend, backend, APIs, authentication, and data.',
-    },
-    {
-      title: 'AI & Automation',
-      description: 'AI assistants, RAG applications, intelligent workflows, and LLM integrations.',
-    },
-    {
-      title: 'Platforms & Developer Experience',
-      description: 'Internal tools, self-service portals, integrations, and delivery automation.',
-    },
-    {
-      title: 'Performance & Accessibility',
-      description: 'Fast, resilient, well-tested, and inclusive digital experiences.',
-    },
-  ]
-
   return (
     <Box component="section" id="about" ref={ref} sx={{ position: 'relative', py: 16 }}>
       <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 3 }}>
@@ -65,19 +47,11 @@ export default function About() {
               About <Box component="span" sx={{ color: 'primary.main' }}>Me</Box>
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, fontSize: '1.125rem', lineHeight: 1.75, color: 'text.secondary' }}>
-              <Typography component="p" sx={{ fontSize: 'inherit', lineHeight: 'inherit', color: 'inherit' }}>
-                I&apos;m a full-stack product engineer with 5+ years of experience building scalable digital
-                products across React, TypeScript, Node.js, APIs, data, and cloud platforms.
-              </Typography>
-              <Typography component="p" sx={{ fontSize: 'inherit', lineHeight: 'inherit', color: 'inherit' }}>
-                I turn complex requirements into intuitive, reliable, and maintainable software. My experience
-                spans customer-facing applications, AI-enabled products, internal platforms, developer tooling,
-                performance optimisation, and accessibility at scale.
-              </Typography>
-              <Typography component="p" sx={{ fontSize: 'inherit', lineHeight: 'inherit', color: 'inherit' }}>
-                I&apos;m most effective when I can take ownership from architecture through delivery, combining
-                product thinking, engineering depth, and a strong focus on measurable outcomes.
-              </Typography>
+              {bio.map((paragraph) => (
+                <Typography key={paragraph} component="p" sx={{ fontSize: 'inherit', lineHeight: 'inherit', color: 'inherit' }}>
+                  {paragraph}
+                </Typography>
+              ))}
             </Box>
           </MotionBox>
 
@@ -133,7 +107,7 @@ export default function About() {
             >
               <Button
                 component="a"
-                href="https://github.com/hyacinth-bruno"
+                href={`https://github.com/${githubUsername}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 variant="outlined"
@@ -146,7 +120,7 @@ export default function About() {
               </Button>
               <Button
                 component="a"
-                href="https://linkedin.com/in/bruno-mbachu/"
+                href={linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 variant="contained"

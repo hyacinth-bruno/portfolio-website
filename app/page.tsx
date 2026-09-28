@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
 import Projects from '@/components/Projects'
+import AskAI from '@/components/AskAI'
 import HireMe from '@/components/HireMe'
 import Contact from '@/components/Contact'
 import Navigation from '@/components/Navigation'
@@ -43,6 +44,7 @@ export default function Home() {
         <Hero />
         <About />
         <Projects />
+        <AskAI />
         <HireMe />
         <Contact />
       </Box>

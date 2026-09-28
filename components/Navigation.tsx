@@ -10,6 +10,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { alpha } from '@mui/material/styles'
 import SplitCTA from './SplitCTA'
+import { OPEN_ASK_AI_EVENT } from './AskAI'
 
 const MotionAppBar = motion(AppBar)
 const MotionButton = motion(Button)
@@ -25,7 +26,11 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navItems = ['About', 'Projects']
+  const navItems = [
+    { label: 'About', href: '#about' },
+    { label: 'Projects', href: '#projects' },
+    { label: 'Ask AI', onClick: () => window.dispatchEvent(new Event(OPEN_ASK_AI_EVENT)) },
+  ]
 
   return (
     <MotionAppBar
@@ -70,8 +75,9 @@ export default function Navigation() {
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1, mr: 2 }}>
           {navItems.map((item, index) => (
             <MotionButton
-              key={item}
-              href={`#${item.toLowerCase()}`}
+              key={item.label}
+              href={'href' in item ? item.href : undefined}
+              onClick={'onClick' in item ? item.onClick : undefined}
               variant="text"
               color="primary"
               initial={{ opacity: 0, y: -20 }}
@@ -79,7 +85,7 @@ export default function Navigation() {
               transition={{ delay: index * 0.1 }}
               sx={{ color: 'text.secondary', fontWeight: 600, borderRadius: 2, px: 2 }}
             >
-              {item}
+              {item.label}
             </MotionButton>
           ))}
         </Box>
